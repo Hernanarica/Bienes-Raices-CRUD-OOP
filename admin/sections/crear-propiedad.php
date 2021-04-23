@@ -1,3 +1,9 @@
+<?php
+
+use App\Vendedores\Vendedores;
+
+$vendedores = (new Vendedores())->getAll();
+?>
 <main class="contenedor sección">
 	<h1>Crear</h1>
 	<a href="index.php?s=panel" class="boton boton-verde">Volver</a>
@@ -26,6 +32,9 @@
 			<legend>Vendedor</legend>
 			<select name="vendedor">
 				<option value="">--Seleccione--</option>
+				<?php foreach ($vendedores as $vendedor): ?>
+					<option value="<?php echo $vendedor->getIdVendedores(); ?>"><?php echo $vendedor->getNombre(); ?></option>
+				<?php endforeach; ?>
 			</select>
 		</fieldset>
 		<input type="submit" value="Crear propiedad" class="boton boton-verde">

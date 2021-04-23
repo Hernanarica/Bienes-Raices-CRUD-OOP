@@ -1,6 +1,10 @@
+<?php
+
+
+?>
 <main class="contenedor seccion contenido-centrado">
 	<h1>Iniciar sesión</h1>
-	<form method="post" class="formulario">
+	<form action="actions/login.php" method="post" class="formulario">
 		<fieldset>
 			<legend>Datos de registro</legend>
 			<label for="email">Email</label>

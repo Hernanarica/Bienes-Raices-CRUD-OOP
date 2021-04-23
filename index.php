@@ -1,11 +1,14 @@
 <?php
 
+use App\Auth\Auth;
+
 require_once 'includes/app.php';
+
+$auth = new Auth();
 
 $section = $_GET[ 's' ] ?? 'home';
 
 if (!isset($routes[ $section ])) $section = 404;
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,8 +36,11 @@ if (!isset($routes[ $section ])) $section = 404;
 							<a href="index.php?s=anuncios">Anuncios</a>
 							<a href="index.php?s=blog">Blog</a>
 							<a href="index.php?s=contacto">Contacto</a>
-							<a href="admin/actions/logOuth.php">Cerrar sesión</a>
-							<a href="index.php?s=login">Iniciar sesión</a>
+							<?php if ($auth->isAuth()): ?>
+								<a href="actions/logOuth.php">Cerrar sesión (<?php echo $auth->getUsuario()->getEmail(); ?>)</a>
+							<?php else: ?>
+								<a href="index.php?s=login">Iniciar sesión</a>
+							<?php endif; ?>
 						</nav>
 					</div>
 				</div>

@@ -34,16 +34,3 @@ class DBConnection
 		return self::$db;
 	}
 }
-
-//$db    = DBConnection::getConnection();
-//$query = "SELECT * FROM propiedades";
-//$stmt  = $db->prepare($query);
-//$stmt->execute();
-//$salida = [];
-//while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//	$salida[] = $row;
-//}
-//
-//echo "<pre>";
-//print_r($salida);
-//echo "</pre>";

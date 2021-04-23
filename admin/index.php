@@ -1,5 +1,13 @@
 <?php
-require_once 'bootstraping/app.php';
+
+use App\Auth\Auth;
+
+require_once 'bootstrapping/app.php';
+
+if (!(new Auth())->isAuth()) {
+	header('location: ../index.php');
+	exit;
+}
 
 $section = $_GET[ 's' ] ?? 'panel';
 
@@ -33,7 +41,7 @@ if (!isset($routes[ $section ])) {
 							<a href="../index.php?s=anuncios">Anuncios</a>
 							<a href="../index.php?s=blog">Blog</a>
 							<a href="../index.php?s=contacto">Contacto</a>
-							<a href="actions/logOuth.php">Cerrar sesión</a>
+							<a href="../actions/logOuth.php">Cerrar sesión</a>
 						</nav>
 					</div>
 				</div>
