@@ -7,7 +7,7 @@ $vendedores = (new Vendedores())->getAll();
 <main class="contenedor sección">
 	<h1>Crear</h1>
 	<a href="index.php?s=panel" class="boton boton-verde">Volver</a>
-	<form action="index.php?s=crear-propiedad" method="post" class="formulario" enctype="multipart/form-data">
+	<form action="../actions/crear.php" method="post" class="formulario" enctype="multipart/form-data">
 		<fieldset>
 			<legend>Información general</legend>
 			<label for="titulo">Titulo</label>
@@ -30,7 +30,7 @@ $vendedores = (new Vendedores())->getAll();
 		</fieldset>
 		<fieldset>
 			<legend>Vendedor</legend>
-			<select name="vendedor">
+			<select name="fk_id_vendedores">
 				<option value="">--Seleccione--</option>
 				<?php foreach ($vendedores as $vendedor): ?>
 					<option value="<?php echo $vendedor->getIdVendedores(); ?>"><?php echo $vendedor->getNombre(); ?></option>

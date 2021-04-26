@@ -1,6 +1,7 @@
 <?php
 
 use App\Auth\Auth;
+use App\Session\Session;
 
 require_once 'includes/app.php';
 
@@ -36,7 +37,9 @@ if (!isset($routes[ $section ])) $section = 404;
 							<a href="index.php?s=anuncios">Anuncios</a>
 							<a href="index.php?s=blog">Blog</a>
 							<a href="index.php?s=contacto">Contacto</a>
+							<a href="index.php?s=registrar">Registrar</a>
 							<?php if ($auth->isAuth()): ?>
+								<a href="admin">Panel de control</a>
 								<a href="actions/logOuth.php">Cerrar sesión (<?php echo $auth->getUsuario()->getEmail(); ?>)</a>
 							<?php else: ?>
 								<a href="index.php?s=login">Iniciar sesión</a>
@@ -61,5 +64,6 @@ if (!isset($routes[ $section ])) $section = 404;
 			<p class="copyright">Todos los derechos Reservados <?php echo date('Y'); ?> &copy;</p>
 		</footer>
 		<script src="build/js/bundle.min.js"></script>
+		<script src="src/js/notify.js"></script>
 	</body>
 </html>

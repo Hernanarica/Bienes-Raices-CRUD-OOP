@@ -21,4 +21,7 @@ $routes = [
    'login' => [
       'title' => 'Inicia sesión',
    ],
+   'registrar' => [
+      'title' => 'Registrar',
+   ],
 ];

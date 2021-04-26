@@ -28,7 +28,7 @@ class Session
 
 	public static function flash($key)
 	{
-		if (self::has($key)) return null;
+		if (!self::has($key)) return null;
 
 		$value = self::get($key);
 		self::remove($key);

@@ -10,6 +10,16 @@ class Usuario
 	protected int    $id;
 	protected string $email;
 	protected string $password;
+	protected array  $propiedades_permitidas = ['id', 'email', 'password'];
+
+	public function massAssigment($data)
+	{
+		foreach ($this->propiedades_permitidas as $prop) {
+			if (isset($data[ $prop ])) {
+				$this->$prop = $data[ $prop ];
+			}
+		}
+	}
 
 	/**
 	 * @param string $email
@@ -44,6 +54,34 @@ class Usuario
 		}
 
 		return null;
+	}
+
+
+	/**
+	 * @param $data
+	 * @return bool
+	 */
+	public function register($data): bool
+	{
+		$db = DBConnection::getConnection();
+
+		$query = "INSERT INTO usuarios(email, password)
+					 VALUES(:email, :password)";
+
+		$stmt  = $db->prepare($query);
+		$exito = $stmt->execute([
+			'email'    => $_POST[ 'email' ],
+			'password' => password_hash($_POST[ 'password' ], PASSWORD_DEFAULT),
+		]);
+
+		if (!$exito) {
+			return false;
+		}
+
+		$data[ 'id' ] = $db->lastInsertId();
+		$this->massAssigment($data);
+
+		return true;
 	}
 
 	/**

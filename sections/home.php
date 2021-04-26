@@ -1,4 +1,17 @@
+<?php
+
+use App\Session\Session;
+
+require_once 'vendor/autoload.php';
+
+$status_notificacion = Session::flash('status_notification');
+?>
 <main class="contenedor seccion">
+	<?php if (isset($status_notificacion[ 'status' ]) && $status_notificacion[ 'status' ]): ?>
+		<div class="status-notificacion-success">
+			<?php echo $status_notificacion[ 'message' ]; ?>
+		</div>
+	<?php endif; ?>
 	<h1>Más Sobre Nosotros</h1>
 	<div class="iconos-nosotros">
 		<div class="icono">

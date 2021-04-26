@@ -23,11 +23,11 @@ $propiedades = (new Propiedad())->getAll();
 					<td><?php echo $propiedad->getIdPropiedades(); ?></td>
 					<td><?php echo $propiedad->getTitulo(); ?></td>
 					<td>
-						<img src="" alt="imagen de casa" class="imagen-tabla">
+						<img src="../test-images/<?php echo $propiedad->getImagen(); ?>" alt="imagen de casa" class="imagen-tabla">
 					</td>
 					<td><?php echo $propiedad->getPrecio(); ?>$</td>
 					<td>
-						<a href="" class="boton-rojito-block">Eliminar</a>
+						<a href="../actions/delete.php?pk=<?php echo $propiedad->getIdPropiedades(); ?>" class="boton-rojito-block">Eliminar</a>
 						<a href="" class="boton-amarillo-block">Actualizar</a>
 					</td>
 				</tr>

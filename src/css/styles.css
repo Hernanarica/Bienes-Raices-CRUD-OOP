@@ -68,3 +68,34 @@ a.boton-rojito-block {
     background-color: #b7060e;
 }
 
+.status-notificacion-error {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    background-color: #D32F2F;
+    color: #e1e1e1;
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+    height: 60px;
+    border-radius: 4px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.status-notificacion-success {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    background-color: #388E3C;
+    color: #e1e1e1;
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+    height: 60px;
+    border-radius: 4px;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

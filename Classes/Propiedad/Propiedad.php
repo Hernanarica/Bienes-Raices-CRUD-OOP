@@ -5,6 +5,7 @@ namespace App\Propiedad;
 use App\DB\DBConnection;
 use PDO;
 use JsonSerializable;
+use Exception;
 
 class Propiedad implements JsonSerializable
 {
@@ -26,7 +27,6 @@ class Propiedad implements JsonSerializable
 	 * @var array|string[]
 	 */
 	protected array $propiedades_permitidas = [
-		'id_propiedades',
 		'titulo',
 		'precio',
 		'imagen',
@@ -83,6 +83,74 @@ class Propiedad implements JsonSerializable
 		$stmt->execute();
 		return $stmt->fetchAll(PDO::FETCH_CLASS, self::class);
 	}
+
+	/**
+	 * @param array $data
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function create(array $data): bool
+	{
+		$db = DBConnection::getConnection();
+
+		$query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc,fecha_creacion, estacionamiento, fk_id_vendedores)
+					 VALUES(:titulo, :precio, :imageName, :descripcion, :habitaciones, :wc, :fecha_creacion ,:estacionamiento, :fk_id_vendedores)";
+
+		$stmt  = $db->prepare($query);
+		$exito = $stmt->execute([
+			'titulo'           => $data[ 'titulo' ],
+			'precio'           => $data[ 'precio' ],
+			'imageName'        => $data[ 'imagen' ],
+			'descripcion'      => $data[ 'descripcion' ],
+			'habitaciones'     => $data[ 'habitaciones' ],
+			'wc'               => $data[ 'wc' ],
+			'fecha_creacion'   => $data[ 'fecha_creacion' ],
+			'estacionamiento'  => $data[ 'estacionamiento' ],
+			'fk_id_vendedores' => $data[ 'fk_id_vendedores' ],
+		]);
+
+		if (!$exito) {
+			throw new Exception('Hubo un error al intentar crear la propiedad.');
+		}
+
+		$this->setIdPropiedades($db->lastInsertId());
+		$this->massAssigment($data);
+		return true;
+	}
+
+
+	/**
+	 * @param $pk
+	 * @param $imageName
+	 * @return bool
+	 */
+	public function delete($pk, $imageName): bool
+	{
+		$db   = DBConnection::getConnection();
+		$path = '../test-images/';
+
+		$query = "DELETE FROM propiedades WHERE id_propiedades = ?";
+		$stmt  = $db->prepare($query);
+		$exito = $stmt->execute([$pk]);
+
+		if (!$exito) {
+			return false;
+		}
+
+		unlink($path . "{$imageName}");
+		return true;
+	}
+
+	public function getByPk($pk)
+	{
+		$db = DBConnection::getConnection();
+
+		$query = "SELECT * FROM propiedades WHERE id_propiedades = ?";
+		$stmt  = $db->prepare($query);
+		$stmt->execute([$pk]);
+		return $stmt->fetchObject(self::class);
+	}
+
 
 	/**
 	 * @return int
