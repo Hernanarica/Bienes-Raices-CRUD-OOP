@@ -100,7 +100,7 @@ class Propiedad implements JsonSerializable
 		$exito = $stmt->execute([
 			'titulo'           => $data[ 'titulo' ],
 			'precio'           => $data[ 'precio' ],
-			'imageName'        => $data[ 'imagen' ],
+			'imageName'        => $data[ 'imagen' ] ?? '',
 			'descripcion'      => $data[ 'descripcion' ],
 			'habitaciones'     => $data[ 'habitaciones' ],
 			'wc'               => $data[ 'wc' ],
@@ -141,7 +141,11 @@ class Propiedad implements JsonSerializable
 		return true;
 	}
 
-	public function getByPk($pk)
+	/**
+	 * @param $pk
+	 * @return Propiedad
+	 */
+	public function getByPk($pk): mixed
 	{
 		$db = DBConnection::getConnection();
 
@@ -149,6 +153,36 @@ class Propiedad implements JsonSerializable
 		$stmt  = $db->prepare($query);
 		$stmt->execute([$pk]);
 		return $stmt->fetchObject(self::class);
+	}
+
+	public function update($data)
+	{
+		$db = DBConnection::getConnection();
+
+		$query = "UPDATE propiedad SET 
+		            titulo 				= :titulo,
+		            precio 				= :precio,
+		            imagen 				= :imagen,
+		            descripcion 		= :descripcion,
+		            habitaciones 		= :habitaciones,
+		            wc 					= :wc,
+		            estacionamiento 	= :estacionamiento,
+		            fk_id_vendedores 	= :fk_id_vendedores  
+            	WHERE id_propiedad = :id_propiedad";
+
+		$stmt  = $db->prepare($query);
+		$exito = $stmt->execute([
+			'titulo'           => $data[ 'titulo' ],
+			'precio'           => $data[ 'precio' ],
+			'imagen'           => $data[ 'imagen' ],
+			'descripcion'      => $data[ 'descripcion' ],
+			'habitaciones'     => $data[ 'habitaciones' ],
+			'wc'               => $data[ 'wc' ],
+			'estacionamiento'  => $data[ 'estacionamiento' ],
+			'fk_id_vendedores' => $data[ 'fk_id_vendedores' ]
+		]);
+
+		return (bool)$exito;
 	}
 
 

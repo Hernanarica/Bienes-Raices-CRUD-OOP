@@ -28,7 +28,7 @@ $propiedades = (new Propiedad())->getAll();
 					<td><?php echo $propiedad->getPrecio(); ?>$</td>
 					<td>
 						<a href="../actions/delete.php?pk=<?php echo $propiedad->getIdPropiedades(); ?>" class="boton-rojito-block">Eliminar</a>
-						<a href="" class="boton-amarillo-block">Actualizar</a>
+						<a href="index.php?s=editar-propiedad&pk=<?php echo $propiedad->getIdPropiedades(); ?>" class="boton-amarillo-block">Actualizar</a>
 					</td>
 				</tr>
 			<?php endforeach; ?>
