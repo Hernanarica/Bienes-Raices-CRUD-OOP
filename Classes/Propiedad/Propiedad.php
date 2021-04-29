@@ -155,11 +155,15 @@ class Propiedad implements JsonSerializable
 		return $stmt->fetchObject(self::class);
 	}
 
-	public function update($data)
+	/**
+	 * @param $data
+	 * @return bool
+	 */
+	public function update($data): bool
 	{
 		$db = DBConnection::getConnection();
 
-		$query = "UPDATE propiedad SET 
+		$query = "UPDATE propiedades SET 
 		            titulo 				= :titulo,
 		            precio 				= :precio,
 		            imagen 				= :imagen,
@@ -168,21 +172,36 @@ class Propiedad implements JsonSerializable
 		            wc 					= :wc,
 		            estacionamiento 	= :estacionamiento,
 		            fk_id_vendedores 	= :fk_id_vendedores  
-            	WHERE id_propiedad = :id_propiedad";
+            	WHERE id_propiedades = :id_propiedad";
 
 		$stmt  = $db->prepare($query);
 		$exito = $stmt->execute([
 			'titulo'           => $data[ 'titulo' ],
 			'precio'           => $data[ 'precio' ],
-			'imagen'           => $data[ 'imagen' ],
+			'imagen'           => $data[ 'imagen' ] ?? '',
 			'descripcion'      => $data[ 'descripcion' ],
 			'habitaciones'     => $data[ 'habitaciones' ],
 			'wc'               => $data[ 'wc' ],
 			'estacionamiento'  => $data[ 'estacionamiento' ],
-			'fk_id_vendedores' => $data[ 'fk_id_vendedores' ]
+			'fk_id_vendedores' => $data[ 'fk_id_vendedores' ],
+			'id_propiedad'     => $data[ 'pk' ]
 		]);
 
 		return (bool)$exito;
+	}
+
+	/**
+	 * @param $pk
+	 * @return Propiedad
+	 */
+	public function eliminarPorPk($pk): mixed
+	{
+		$db = DBConnection::getConnection();
+
+		$query = "SELECT * FROM propiedades WHERE id_propiedades = ?";
+		$stmt  = $db->prepare($query);
+		$stmt->execute([$pk]);
+		return $stmt->fetchObject(self::class);
 	}
 
 
